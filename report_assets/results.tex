@@ -1,0 +1,21 @@
+\section{Results}
+\subsection{CIFAR-10-LT}
+On CIFAR-10-LT, ERM reaches 69.4\% overall accuracy, with 92.6\% on many-shot, 71.2\% on medium-shot and 43.7\% on few-shot classes (Table~\ref{tab:cifar10-main}). The best method by mean overall accuracy is Post-hoc LA (tau on val) with 78.8\% (+9.4 points over ERM). The best few-shot accuracy is 78.2\%, obtained by Post-hoc LA (tau on val), against 43.7\% for ERM. Methods that beat ERM on every seed in overall accuracy (paired differences in points, Table~\ref{tab:cifar10-paired}): Post-hoc LA (tau on val) (+9.4), Balanced softmax (+8.6), tau-norm (+8.5), Cosine + LDAM-DRW (+7.3), Post-hoc LA (tau=1) (+7.0), cRT (+4.6), Cosine + LDAM (+2.6). The following do not beat ERM on every seed and should be read as no clear gain: Reweighted CE (-0.0), Focal (-0.6), Class-balanced (-0.1), Cosine + CE (-0.6). 
+
+\begin{table}[t]\centering\small
+\caption{CIFAR-10-LT, imbalance 100. Test accuracy (\%), mean $\pm$ std over 3 seeds; bold = best mean.}\label{tab:cifar10-main}
+\input{tables/cifar10_main.tex}\end{table}
+\begin{table}[t]\centering\small
+\caption{CIFAR-10-LT: paired difference against ERM of the same seed (percentage points).}\label{tab:cifar10-paired}
+\input{tables/cifar10_paired.tex}\end{table}
+\subsection{CIFAR-100-LT}
+On CIFAR-100-LT, ERM reaches 38.1\% overall accuracy, with 64.9\% on many-shot, 37.2\% on medium-shot and 7.8\% on few-shot classes (Table~\ref{tab:cifar100-main}). The best method by mean overall accuracy is Balanced softmax with 42.6\% (+4.5 points over ERM). The best few-shot accuracy is 25.8\%, obtained by Post-hoc LA (tau on val), against 7.8\% for ERM. Methods that beat ERM on every seed in overall accuracy (paired differences in points, Table~\ref{tab:cifar100-paired}): Balanced softmax (+4.5), Cosine + LDAM-DRW (+4.3), Post-hoc LA (tau on val) (+4.1), Post-hoc LA (tau=1) (+3.8), tau-norm (+3.5), cRT (+2.4). 
+
+\begin{table}[t]\centering\small
+\caption{CIFAR-100-LT, imbalance 100. Test accuracy (\%), mean $\pm$ std over 3 seeds; bold = best mean.}\label{tab:cifar100-main}
+\input{tables/cifar100_main.tex}\end{table}
+\begin{table}[t]\centering\small
+\caption{CIFAR-100-LT: paired difference against ERM of the same seed (percentage points).}\label{tab:cifar100-paired}
+\input{tables/cifar100_paired.tex}\end{table}
+\paragraph{Caveats.} The standard deviation covers initialisation and batch order only, as the split is fixed.
+With three seeds, differences below about one to two points are within noise and we do not claim significance.

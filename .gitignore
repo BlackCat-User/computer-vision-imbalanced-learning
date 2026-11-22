@@ -1,0 +1,43 @@
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Datasets
+data/
+
+# Model checkpoints
+checkpoints/
+*.pt
+*.pth
+*.ckpt
+
+# Temporary files
+*.bak
+*.tmp
+structure.txt
+code_bundle.zip
+
+# IDE and operating system
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Archived experiments
+old/
+logs/old_mine/
+
+# Debug and archived experiment files
+logs/*_debug.json
+results/*_debug.json
+results/old_decoupled/
+results/old_mine/
+splits/old_mine/

@@ -1,0 +1,8 @@
+method,family,n,overall_mean,overall_std,many_mean,many_std,medium_mean,medium_std,few_mean,few_std
+ce,Baseline,3,38.103,0.359,64.924,0.742,37.238,0.682,7.822,0.283
+balanced_softmax,Logit adj. (loss),3,42.627,0.853,60.152,0.357,42.562,1.154,22.256,1.148
+posthoc_la,Post-hoc,3,42.157,0.924,56.495,3.278,41.857,1.676,25.778,2.495
+posthoc_la1,Post-hoc,3,41.857,0.699,60.695,0.61,41.981,1.25,19.733,0.982
+taunorm,Decoupled,3,41.567,0.71,59.686,2.414,40.714,1.972,21.422,2.47
+crt,Decoupled,3,40.523,0.85,62.524,1.042,40.838,0.959,14.489,0.675
+cos_ldam_drw,Cosine head,3,42.44,0.965,62.105,1.166,42.324,1.147,19.633,0.635

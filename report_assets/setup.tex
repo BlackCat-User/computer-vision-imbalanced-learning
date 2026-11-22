@@ -1,0 +1,27 @@
+\section{Experimental Setup}
+\paragraph{Datasets.} We build CIFAR-10-LT and CIFAR-100-LT by subsampling the training sets with an exponential profile
+$n_i = \lfloor n_{\max}\,\rho^{-i/(C-1)}\rfloor$ and imbalance ratio $\rho=100$, with $n_{\max}=5000$ and $500$ respectively.
+CIFAR-10-LT initially contains 12,406 images, with class counts ranging from 5,000 to 50. We hold out 10 images per class for validation, leaving 12,306 training images, with counts ranging from 4,990 to 40.
+CIFAR-100-LT keeps 500 and 5 images in the largest and smallest classes, 10847 images in total.
+The test sets stay balanced (1000 images per class for CIFAR-10, 100 for CIFAR-100).
+Classes are grouped as many-shot ($>100$ training images), medium-shot (20 to 100) and few-shot ($<20$).
+On CIFAR-100-LT this gives 35 / 35 / 30 classes; on CIFAR-10-LT we use the fixed groups
+$\{0,1,2\}$, $\{3,4,5,6\}$, $\{7,8,9\}$ (the standard thresholds would leave the few-shot group empty).
+\paragraph{Backbone and training.} All methods use a ResNet-32 trained from scratch with SGD (momentum 0.9, weight decay $2\times10^{-4}$),
+batch size 128, 200 epochs, base learning rate 0.1 with linear warmup over the first 5 epochs and a $\times0.01$ decay at epochs 160 and 180.
+Training augmentation is random crop (padding 4) and horizontal flip, with per-channel normalisation; test images are only normalised.
+All end-to-end trained models use the same base architecture, data augmentation and 200-epoch training recipe. Decoupled methods reuse the corresponding ERM checkpoint: cRT performs an additional classifier-training stage, whereas post-hoc methods require no further training.
+\paragraph{Methods.} Baselines: ERM (cross-entropy), inverse-frequency reweighted cross-entropy, focal loss ($\gamma=2$),
+class-balanced loss ($\beta=0.9999$) and balanced softmax. Two-stage methods on the trained ERM backbone: cRT
+(classifier re-initialised and retrained for 20 epochs with class-balanced sampling, backbone and batch-norm frozen,
+cosine learning-rate decay from 0.1) and $\tau$-norm ($w_k/\|w_k\|^{\tau}$). Post-hoc logit adjustment ($z_k - \tau\log\pi_k$) on the ERM
+logits, with $\tau=1$ or $\tau$ tuned on validation. Cosine-head variants: cosine classifier with scale $s=30$ trained with cross-entropy,
+with the LDAM margin (maximum margin 0.5), and with LDAM plus deferred re-weighting from epoch 160 (LDAM-DRW).
+\paragraph{Tuning and protocol.} Test accuracy is reported at the final epoch; the test set is never used for any selection.
+Tuned methods choose $\tau$ by balanced accuracy on a held-out validation set: on CIFAR-10-LT the 100 validation images above,
+on CIFAR-100-LT 990 training images that are outside the long-tailed subset (10 per class for 99 classes, class 0 has no spare images).
+The $\tau$ grid is $[0,4]$ in steps of 0.1 for $\tau$-norm and $[0,4]$ in steps of 0.1 for post-hoc LA on CIFAR-10-LT, and
+$[0,2]$ in steps of 0.1 and $[0,3]$ in steps of 0.1 on CIFAR-100-LT; ties are broken by the median of the best values.
+Every configuration is run with seeds 0, 1, 2, which change the initialisation and batch order but not the long-tailed split.
+We report mean $\pm$ sample standard deviation. Two-stage and post-hoc methods reuse the ERM backbone of the same seed, so we also report
+paired differences against ERM.
